@@ -1,5 +1,6 @@
 package com.pamcary.avaliacao.services;
 
+import com.pamcary.avaliacao.dto.PessoaDTO;
 import com.pamcary.avaliacao.dto.PessoaForm;
 import com.pamcary.avaliacao.model.Pessoa;
 import com.pamcary.avaliacao.repository.PessoaRepository;
@@ -41,7 +42,7 @@ public class PessoaService {
     }
 
     @Transactional
-    public Page<Pessoa> listar(@RequestParam(required = false) String cpf,
+    public Page<PessoaDTO> listar(@RequestParam(required = false) String cpf,
                                @PageableDefault(sort = "codigo", direction = Sort.Direction.DESC)
                                Pageable paginacao) {
 
@@ -52,8 +53,31 @@ public class PessoaService {
             pessoas = pessoaRepository.findByCpf(cpf, paginacao);
         }
 
-        return pessoas;
+        Page<PessoaDTO> pessoaDTOS = pessoas.map((Pessoa pessoa) -> new PessoaDTO(
+                pessoa.getCodigo(),
+                pessoa.getNome(),
+                pessoa.getCpf(),
+                pessoa.getDataNascimento()
+        ));
 
+        return pessoaDTOS;
+
+    }
+
+    public PessoaDTO listarPorId(Long id) {
+
+        Optional<Pessoa> optional = pessoaRepository.findById(id);
+
+        if(optional.isPresent()) {
+            PessoaDTO pessoaDTO = new PessoaDTO(
+                    optional.get().getCodigo(),
+                    optional.get().getNome(),
+                    optional.get().getCpf(),
+                    optional.get().getDataNascimento());
+            return pessoaDTO;
+        }
+
+        return null;
     }
 
 }
