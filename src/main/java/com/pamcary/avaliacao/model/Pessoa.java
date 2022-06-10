@@ -2,6 +2,7 @@ package com.pamcary.avaliacao.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "pessoa")
 public class Pessoa implements Serializable {
 
