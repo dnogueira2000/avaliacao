@@ -1,7 +1,7 @@
 package com.pamcary.avaliacao.controller;
 
+import com.pamcary.avaliacao.dto.PessoaDTO;
 import com.pamcary.avaliacao.dto.PessoaForm;
-import com.pamcary.avaliacao.model.Pessoa;
 import com.pamcary.avaliacao.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pessoa")
@@ -43,11 +45,24 @@ public class PessoaController {
     }
 
     @GetMapping
-    public Page<Pessoa> listarPessoas(@RequestParam(required = false) String cpf,
+    public Page<PessoaDTO> listarPessoas(@RequestParam(required = false) String cpf,
                                       @PageableDefault(sort = "codigo", direction = Sort.Direction.DESC)
                                       Pageable paginacao) {
 
         return pessoaService.listar(cpf, paginacao);
+
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<PessoaDTO> listarPessoas(@PathVariable("id") Long id) {
+
+        PessoaDTO pessoaDTO = pessoaService.listarPorId(id);
+
+        if(Objects.nonNull(pessoaDTO)) {
+            return ResponseEntity.ok(pessoaDTO);
+        }
+
+        return ResponseEntity.notFound().build();
 
     }
 

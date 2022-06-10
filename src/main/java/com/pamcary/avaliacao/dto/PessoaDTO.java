@@ -3,13 +3,18 @@ package com.pamcary.avaliacao.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
 @Setter
-public class PessoaForm {
+@NoArgsConstructor
+public class PessoaDTO {
+
+    private Long codigo;
 
     @NotNull
     @Size(min = 2, max = 60, message = "Campo deve conter no minimo 2 caracteres e no máximo 60 caracteres")
@@ -23,10 +28,10 @@ public class PessoaForm {
     @NotNull
     private LocalDate dataNascimento;
 
-    /*public PessoaForm(Long codigo, String nome, String cpf, LocalDate dataNascimento) {
+    public PessoaDTO(Long codigo, String nome, String cpf, LocalDate dataNascimento) {
         this.codigo = codigo;
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
-    }*/
+    }
 }

@@ -34,4 +34,11 @@ public class Pessoa implements Serializable {
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
     }
+
+    public Pessoa(Long codigo, String nome, String cpf, LocalDate dataNascimento) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+    }
 }
