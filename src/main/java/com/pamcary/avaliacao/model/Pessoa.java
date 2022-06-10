@@ -3,10 +3,9 @@ package com.pamcary.avaliacao.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -21,12 +20,16 @@ public class Pessoa implements Serializable {
     @Column(nullable = false, length = 60)
     private String nome;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 20)
     private String cpf;
 
-    @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(nullable = false)
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
+    public Pessoa(String nome, String cpf, LocalDate dataNascimento) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+    }
 }
