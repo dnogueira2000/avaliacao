@@ -2,20 +2,19 @@ package com.pamcary.avaliacao.controller;
 
 import com.pamcary.avaliacao.dto.PessoaDTO;
 import com.pamcary.avaliacao.dto.PessoaForm;
+import com.pamcary.avaliacao.model.Pessoa;
 import com.pamcary.avaliacao.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pessoa")
@@ -45,12 +44,9 @@ public class PessoaController {
     }
 
     @GetMapping
-    public Page<PessoaDTO> listarPessoas(@RequestParam(required = false) String cpf,
-                                      @PageableDefault(sort = "codigo", direction = Sort.Direction.DESC)
-                                      Pageable paginacao) {
+    public List<Pessoa> listarPessoas(@RequestParam(required = false) String cpf) {
 
-        return pessoaService.listar(cpf, paginacao);
-
+        return pessoaService.listar(cpf);
     }
 
     @GetMapping("/find/{id}")
@@ -63,8 +59,17 @@ public class PessoaController {
         }
 
         return ResponseEntity.notFound().build();
-
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity editar(@PathVariable Long id, @RequestBody @Valid PessoaForm pessoaForm) {
+
+        Pessoa pessoa = pessoaService.editar(id, pessoaForm);
+
+        if(Objects.nonNull(pessoa.getCodigo())) {
+            return ResponseEntity.ok(new PessoaDTO(pessoa));
+        }
+        return null;
+    }
 
 }

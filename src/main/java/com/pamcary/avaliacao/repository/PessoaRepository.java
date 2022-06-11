@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
-    public Page<Pessoa> findByCpf(@Param("cpf") String cpf, Pageable paginacao);
+    public List<Pessoa> findByCpf(@Param("cpf") String cpf);
 
 }

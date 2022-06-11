@@ -1,6 +1,7 @@
 package com.pamcary.avaliacao.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pamcary.avaliacao.model.Pessoa;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,4 +35,12 @@ public class PessoaDTO {
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
     }
+
+    public PessoaDTO(Pessoa pessoa) {
+        this.codigo = pessoa.getCodigo();
+        this.nome = pessoa.getNome();
+        this.cpf = pessoa.getCpf();
+        this.dataNascimento = pessoa.getDataNascimento();
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.pamcary.avaliacao.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pamcary.avaliacao.model.Pessoa;
+import com.pamcary.avaliacao.repository.PessoaRepository;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,10 +25,15 @@ public class PessoaForm {
     @NotNull
     private LocalDate dataNascimento;
 
-    /*public PessoaForm(Long codigo, String nome, String cpf, LocalDate dataNascimento) {
-        this.codigo = codigo;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-    }*/
+
+    public Pessoa atualizar(Long id, PessoaRepository pessoaRepository) {
+        Pessoa pessoa = pessoaRepository.getOne(id);
+
+        //atualiza com o que veio do form
+        pessoa.setNome(this.nome);
+        pessoa.setCpf(this.cpf);
+        pessoa.setDataNascimento(this.dataNascimento);
+
+        return pessoa;
+    }
 }
